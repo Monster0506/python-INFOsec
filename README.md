@@ -74,3 +74,39 @@ A Bluetooth Low Energy (BLE) scanner that discovers nearby Bluetooth devices.
 - Python 3.x
 - `bleak` package (Bluetooth Low Energy library)
 - Bluetooth adapter enabled on the host machine
+
+## WiFi SSID Scanner
+
+A WiFi network scanner that discovers available wireless networks with signal strength and security information.
+
+**Features:**
+- Scans for all available WiFi networks (SSIDs)
+- Signal strength with quality ratings (Excellent/Good/Fair/Weak)
+- Visual signal strength bars
+- Security type detection (Open, WPA, WPA2, etc.)
+- MAC address (BSSID) and frequency information
+- Detects hidden networks
+- Sorted by signal strength (strongest first)
+
+**Output:** Results are stored to **active_ssids.txt**
+
+**Usage:**
+```powershell
+# Basic scan (5 seconds)
+.\ssidscanner.py
+
+# Detailed scan with MAC, security, and frequency
+.\ssidscanner.py -d
+
+# Extended scan
+.\ssidscanner.py -t=10 -d
+
+# Help
+.\ssidscanner.py --help
+```
+
+**Requirements:**
+- Python 3.x
+- `pywifi` and `comtypes` packages
+- WiFi adapter enabled on the host machine
+- Administrator privileges recommended for best results
