@@ -39,7 +39,7 @@ A multithreaded network scanner that discovers active hosts on a network based o
 - `python-nmap` package
 - Nmap installed on the host machine
 
-## BT Scanner
+## BTLE Scanner
 
 A Bluetooth Low Energy (BLE) scanner that discovers nearby Bluetooth devices.
 

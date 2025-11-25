@@ -212,4 +212,7 @@ __marimo__/
 *.socket
 
 # TEXT files created by scripts
-*.txt
+# Hard coded to support requirements.txt to be tracked
+active_bt.txt
+active_hosts.txt
+active_ssids.txt
