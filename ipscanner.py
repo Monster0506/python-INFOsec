@@ -70,7 +70,10 @@ def scan_network(network_range, max_threads=20, scan_ports=False):
         network = ipaddress.ip_network(network_range, strict=False)
         
         if platform.system() == 'Windows':
-            nmap_path = r'C:\Program Files\Nmap\nmap.exe'
+            nmap_path = r'C:\Program Files (x86)\Nmap\nmap.exe'
+            #check if nmap exists at this path
+            if not os.path.exists(nmap_path):
+                nmap_path = r'C:\Program Files\Nmap\nmap.exe'
         if platform.system() == 'Linux':
             nmap_path = '/usr/bin/nmap'
         if platform.system() == 'Darwin':

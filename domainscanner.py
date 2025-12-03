@@ -43,7 +43,12 @@ class DomainScanner:
         """Find the Nmap executable path."""
         # Common Nmap installation paths
         if platform.system() == 'Windows':
-            return r'C:\Program Files\Nmap\nmap.exe'
+            temp = r'C:\Program Files (x86)\Nmap\nmap.exe'
+            #check if nmap exists at this path
+            if not os.path.exists(temp):
+                return r'C:\Program Files\Nmap\nmap.exe'
+            return temp
+
         if platform.system() == 'Linux':
             return '/usr/bin/nmap'
         if platform.system() == 'Darwin':
