@@ -70,9 +70,11 @@ def scan_network(network_range, max_threads=20, scan_ports=False):
         network = ipaddress.ip_network(network_range, strict=False)
         
         if platform.system() == 'Windows':
-            nmap_path = r'C:\Program Files (x86)\Nmap\nmap.exe'
+            nmap_path = r'C:\Program Files\Nmap\nmap.exe'
         if platform.system() == 'Linux':
             nmap_path = '/usr/bin/nmap'
+        if platform.system() == 'Darwin':
+            nmap_path = '/usr/local/bin/nmap'
         
         print(f"Scanning network: {network_range}")
         print(f"Total hosts to scan: {network.num_addresses - 2}")  # Exclude network and broadcast

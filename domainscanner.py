@@ -43,9 +43,11 @@ class DomainScanner:
         """Find the Nmap executable path."""
         # Common Nmap installation paths
         if platform.system() == 'Windows':
-            return 'C:\\Program Files (x86)\\Nmap\\nmap.exe'
+            return r'C:\Program Files\Nmap\nmap.exe'
         if platform.system() == 'Linux':
             return '/usr/bin/nmap'
+        if platform.system() == 'Darwin':
+            return '/usr/local/bin/nmap'
         
         return None
     
@@ -96,14 +98,14 @@ class DomainScanner:
         try:
             requests.get(f'http://{domain}', timeout=5)
             services['http'] = True
-        except:
+        except requests.RequestException:
             services['http'] = False
         
         # Check HTTPS
         try:
             requests.get(f'https://{domain}', timeout=5)
             services['https'] = True
-        except:
+        except requests.RequestException:
             services['https'] = False
         
         return services
