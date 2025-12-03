@@ -110,3 +110,59 @@ A WiFi network scanner that discovers available wireless networks with signal st
 - `pywifi` and `comtypes` packages
 - WiFi adapter enabled on the host machine
 - Administrator privileges recommended for best results
+
+## Domain Scanner
+
+A comprehensive domain availability and service scanner that checks DNS resolution and active services across multiple TLDs.
+
+**Features:**
+- Checks 100+ common TLDs (com, net, org, io, dev, etc.)
+- DNS resolution checking (primary test)
+- HTTP/HTTPS service detection
+- Nmap port scanning for resolved domains
+- Multithreaded scanning for speed
+- Detailed text report generation
+- Custom TLD list support
+- Summary statistics
+
+**Output:** Results are stored to **domain_scan_results.txt** (or custom filename)
+
+**Usage:**
+```powershell
+# Basic scan - checks all common TLDs
+.\domainscanner.py austin
+
+# Custom thread count for faster scanning
+.\domainscanner.py mycompany -t=20
+
+# Check specific TLDs only
+.\domainscanner.py example --tlds=com,net,org,io,dev
+
+# Disable Nmap port scanning
+.\domainscanner.py mybrand --no-nmap
+
+# Custom output file
+.\domainscanner.py testdomain -o=testdomain_report.txt
+
+# Help
+.\domainscanner.py --help
+```
+
+**Example:** Checking "austin" will scan:
+- austin.com, austin.net, austin.org
+- austin.io, austin.dev, austin.ai
+- austin.us, austin.uk, austin.ca
+- And 70+ more TLDs
+
+**Report includes:**
+- DNS resolution status
+- IP address for resolved domains
+- HTTP/HTTPS availability
+- Open ports and services (if Nmap enabled)
+- Summary statistics
+
+**Requirements:**
+- Python 3.x
+- `python-nmap` package (already included for IP scanner)
+- Nmap installed (optional, for port scanning)
+- Internet connection
