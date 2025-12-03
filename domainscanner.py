@@ -1,10 +1,12 @@
 import sys
 import socket
-import subprocess
+import requests
 import nmap
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import platform
+import traceback
+import os
 
 # Comprehensive list of popular TLDs to check
 COMMON_TLDS = [
@@ -40,25 +42,10 @@ class DomainScanner:
     def _find_nmap(self):
         """Find the Nmap executable path."""
         # Common Nmap installation paths
-        common_paths = [
-            r'C:\Program Files (x86)\Nmap\nmap.exe',
-            r'C:\Program Files\Nmap\nmap.exe',
-            '/usr/bin/nmap',
-            '/usr/local/bin/nmap',
-        ]
-        
-        for path in common_paths:
-            try:
-                if platform.system() == 'Windows':
-                    import os
-                    if os.path.exists(path):
-                        return path
-                else:
-                    result = subprocess.run(['which', 'nmap'], capture_output=True, text=True)
-                    if result.returncode == 0:
-                        return result.stdout.strip()
-            except:
-                continue
+        if platform.system() == 'Windows':
+            return 'C:\\Program Files (x86)\\Nmap\\nmap.exe'
+        if platform.system() == 'Linux':
+            return '/usr/bin/nmap'
         
         return None
     
@@ -107,18 +94,14 @@ class DomainScanner:
         
         # Check HTTP
         try:
-            import urllib.request
-            urllib.request.urlopen(f'http://{domain}', timeout=5)
+            requests.get(f'http://{domain}', timeout=5)
             services['http'] = True
         except:
             services['http'] = False
         
         # Check HTTPS
         try:
-            import urllib.request
-            import ssl
-            context = ssl.create_default_context()
-            urllib.request.urlopen(f'https://{domain}', timeout=5, context=context)
+            requests.get(f'https://{domain}', timeout=5)
             services['https'] = True
         except:
             services['https'] = False
@@ -355,7 +338,6 @@ def main():
         sys.exit(1)
     except Exception as e:
         print(f"\nError: {e}")
-        import traceback
         traceback.print_exc()
         sys.exit(1)
 

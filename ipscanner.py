@@ -4,6 +4,7 @@ import os
 import socket
 import ipaddress
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import platform
 
 def scan_single_host(nm, ip, scan_ports=False):
     """
@@ -68,8 +69,10 @@ def scan_network(network_range, max_threads=20, scan_ports=False):
         # Parse the network range
         network = ipaddress.ip_network(network_range, strict=False)
         
-        # Specify the path to nmap.exe if it's not in PATH
-        nmap_path = r'C:\Program Files (x86)\Nmap\nmap.exe'
+        if platform.system() == 'Windows':
+            nmap_path = r'C:\Program Files (x86)\Nmap\nmap.exe'
+        if platform.system() == 'Linux':
+            nmap_path = '/usr/bin/nmap'
         
         print(f"Scanning network: {network_range}")
         print(f"Total hosts to scan: {network.num_addresses - 2}")  # Exclude network and broadcast

@@ -11,3 +11,5 @@ bleak==1.1.1
 pywifi==1.1.12
 comtypes==1.4.13
 
+# Domain Scanner dependencies
+requests==2.31.0
