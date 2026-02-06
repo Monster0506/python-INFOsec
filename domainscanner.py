@@ -211,7 +211,9 @@ class DomainScanner:
             
             f.write("SUMMARY\n")
             f.write("-"*70 + "\n")
+            non_resolving_count = len(self.results) - resolving_count
             f.write(f"Domains Resolving (DNS): {resolving_count}\n")
+            f.write(f"Domains Not Resolving: {non_resolving_count}\n")
             f.write(f"HTTP Available: {http_count}\n")
             f.write(f"HTTPS Available: {https_count}\n")
             f.write(f"Domains with Open Ports: {ports_count}\n")
@@ -251,7 +253,16 @@ class DomainScanner:
                         f.write(f"  {port_info['port']}/{port_info['protocol']} - {port_info['service']}\n")
                 
                 f.write("\n")
-        
+
+            # Non-resolving domains
+            non_resolving = [r for r in sorted_results if not r['dns'].get('resolves')]
+            if non_resolving:
+                f.write("NON-RESOLVING DOMAINS\n")
+                f.write("="*70 + "\n\n")
+                for result in non_resolving:
+                    f.write(f"  {result['domain']}\n")
+                f.write("\n")
+
         print(f"✓ Report saved to {output_file}")
         return output_file
 
